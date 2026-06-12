@@ -14,9 +14,9 @@ Document at least 3 bugs you found. Add rows as needed.
 
 | Input | Expected Behavior | Actual Behavior | Console Output / Error |
 |-------|-------------------|-----------------|------------------------|
-| | | | |
-| | | | |
-| | | | |
+|5      |     too low       |      too low    | correct no error       |
+| 10    |     too low       |      too low    | correct/ no error      |
+| 0     |     too low       |      too high   | incorrect/ error       |
 
 ---
 
