@@ -5,7 +5,11 @@ Answer each question in 3 to 5 sentences. Be specific and honest about what actu
 ## 1. What was broken when you started?
 
 - What did the game look like the first time you ran it?
-- List at least two concrete bugs you noticed at the start  
+  The game seemed to run smoothly at first. The UI was clean and we could see what the correct answer was in the guessing game.
+  This gave us a good reference point to begin debugging.
+- List at least two concrete bugs you noticed at the start
+  The hints kept telling us to go lower even when we were at zero, but higher when we were greater than the correct answer which doesnt make sense.
+  The score does not reset to 0 when starting a new game. The game also ignores the difficulty level on the left hand side.
   (for example: "the hints were backwards").
 
 **Bug Reproduction Log**
@@ -23,6 +27,7 @@ Document at least 3 bugs you found. Add rows as needed.
 ## 2. How did you use AI as a teammate?
 
 - Which AI tools did you use on this project (for example: ChatGPT, Gemini, Copilot)?
+  I used claude for this one.
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
 
