@@ -1,0 +1,79 @@
+PEP 8 STYLE COMPLIANCE REVIEW & FIXES
+======================================
+Date: 2026-06-20
+Files reviewed: app.py, logic_utils.py
+
+
+INITIAL ASSESSMENT
+------------------
+
+logic_utils.py — Very good compliance
+  [PASS] Two blank lines between all top-level functions
+  [PASS] Full type annotations and return types on all functions
+  [PASS] Docstrings present on all functions
+  [PASS] except ValueError (specific) instead of bare except
+  [PASS] No lines exceeding 79 characters
+  [WARN] from typing import Optional is unnecessary in Python 3.10+;
+         modern syntax uses str | None directly
+
+app.py — Good compliance, a few minor issues
+  [PASS] Import order correct: stdlib -> third-party -> local
+  [PASS] ATTEMPT_LIMIT_MAP constant is uppercase
+  [PASS] Blank lines between logical sections
+  [FAIL] E501 - Line too long: the from logic_utils import line exceeded
+         79 characters
+  [WARN] # --- Section --- style comments are not standard PEP 8 convention;
+         plain # Section is preferred
+
+
+FIXES APPLIED
+-------------
+
+app.py
+  1. Broke the long import line into a parenthesised multi-line import:
+
+     BEFORE:
+       from logic_utils import check_guess, get_range_for_difficulty, parse_guess, update_score
+
+     AFTER:
+       from logic_utils import (
+           check_guess,
+           get_range_for_difficulty,
+           parse_guess,
+           update_score,
+       )
+
+  2. Replaced decorative section comment style with plain PEP 8 comments:
+
+     BEFORE:
+       # --- Page config ---
+       # --- Sidebar settings ---
+       # --- Session state initialization ---
+       # --- Game UI ---
+
+     AFTER:
+       # Page config
+       # Sidebar settings
+       # Session state initialization
+       # Game UI
+
+logic_utils.py
+  3. Removed unnecessary typing import and updated type hints to modern syntax:
+
+     BEFORE:
+       from typing import Optional
+       def parse_guess(raw: Optional[str]) -> tuple[bool, Optional[int], Optional[str]]:
+
+     AFTER:
+       def parse_guess(raw: str | None) -> tuple[bool, int | None, str | None]:
+
+
+TEST RESULTS AFTER FIXES
+-------------------------
+35 passed in 0.04s (all tests green, no regressions)
+
+
+FINAL COMPLIANCE STATUS
+-----------------------
+app.py       — Full PEP 8 compliance
+logic_utils.py — Full PEP 8 compliance

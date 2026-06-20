@@ -55,21 +55,38 @@ Document at least 3 bugs you found. Add rows as needed.
 
 - How did you decide whether a bug was really fixed?
 
+  I ran similar tests to what i used before, then generated pytest cases to ensure it is debugged against edge cases as well
+
 - Describe at least one test you ran (manual or using pytest) and what it showed you about your code.
-
+  
+  I changed the difficulty setting from "normal" to "hard" and noticed that the hard difficulty now reads a range from 1-200 instead of 1-50
+  
 - Did AI help you design or understand any tests? How?
-
+  Yes, AI did help with the design of the tests.
+  Several general correctness tests were designed to check whether the update_score function was functioning properly. Another test that was designed was to determine of higher or lower hints were swapped or not and to ensure the "secret" variable was not cast to str on even attempts
 ---
 
 ## 4. What did you learn about Streamlit and state?
 
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
 
+Streamlit reruns will rerun the streamlit app script or reinitialize the app.py script. session state will restart a session without reinitializing the app.py script.
+
 ---
 
 ## 5. Looking ahead: your developer habits
 
 - What is one habit or strategy from this project that you want to reuse in future labs or projects?
+
+
   - This could be a testing habit, a prompting strategy, or a way you used Git.
+
+  A habit i want to reuse and develop is going elbows deep on projects that are entirely new to me and out of my area of expertise. This project has been giving me more confidence in tackling problems in scripts which i am seeing for the first time. AI has really helped make this process much smoother
+
 - What is one thing you would do differently next time you work with AI on a coding task?
+
+  Take more time to read the script and break down things one by one on a deeper level. Also, being more efficient with my prompting to give me more time on making the code more robust and adding additional feature to make the app more engaging.
+
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
+
+  AI generated code is really nice to work with.

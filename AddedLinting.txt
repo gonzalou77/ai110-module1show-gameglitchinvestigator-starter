@@ -1,0 +1,189 @@
+ADDED LINTING & TYPE ANNOTATIONS
+=================================
+Date: 2026-06-20
+Files: app.py, logic_utils.py
+
+
+========================================================
+ROUND 1 — TYPE ANNOTATIONS & EXCEPTION NARROWING
+========================================================
+
+LOGIC_UTILS.PY
+--------------
+
+1. get_range_for_difficulty
+   Added parameter type and return type annotation:
+
+     def get_range_for_difficulty(difficulty: str) -> tuple[int, int]:
+
+2. parse_guess
+   Added parameter type (with None union) and full return type annotation:
+
+     def parse_guess(raw: str | None) -> tuple[bool, int | None, str | None]:
+
+   Also narrowed exception handling from broad `except Exception` to specific:
+
+     BEFORE: except Exception:
+     AFTER:  except ValueError:
+
+3. check_guess
+   Added parameter types and return type annotation:
+
+     def check_guess(guess: int, secret: int) -> tuple[str, str]:
+
+4. update_score
+   Added return type annotation (parameters already had types):
+
+     def update_score(current_score: int, outcome: str, attempt_number: int) -> int:
+
+
+APP.PY
+------
+
+5. ATTEMPT_LIMIT_MAP constant
+   Added inline type annotation:
+
+     ATTEMPT_LIMIT_MAP: dict[str, int] = {
+         "Easy": 6,
+         "Normal": 8,
+         "Hard": 5,
+     }
+
+6. difficulty variable
+   Added inline type annotation:
+
+     difficulty: str = st.sidebar.selectbox(...)
+
+7. raw_guess variable
+   Added inline type annotation:
+
+     raw_guess: str = st.text_input(...)
+
+
+FULL ANNOTATED FUNCTION SIGNATURES (AFTER ROUND 1)
+---------------------------------------------------
+
+logic_utils.py:
+
+  def get_range_for_difficulty(difficulty: str) -> tuple[int, int]:
+  def parse_guess(raw: str | None) -> tuple[bool, int | None, str | None]:
+  def check_guess(guess: int, secret: int) -> tuple[str, str]:
+  def update_score(current_score: int, outcome: str, attempt_number: int) -> int:
+
+app.py:
+
+  ATTEMPT_LIMIT_MAP: dict[str, int]
+  difficulty: str
+  raw_guess: str
+
+
+========================================================
+ROUND 2 — HIGH-LEVEL DOCSTRINGS & BLOCK COMMENTS
+========================================================
+
+LOGIC_UTILS.PY — EXPANDED DOCSTRINGS
+--------------------------------------
+
+All four functions received expanded docstrings explaining inputs, outputs,
+and behaviour at a high level.
+
+get_range_for_difficulty:
+
+  """
+  Return the (low, high) inclusive number range for a given difficulty.
+
+  Easy   -> (1, 20):  small range, easiest to guess
+  Normal -> (1, 100): standard range
+  Hard   -> (1, 200): widest range, hardest to guess
+  Any unrecognised difficulty falls back to the Normal range (1, 100).
+  """
+
+parse_guess:
+
+  """
+  Validate and convert raw text input from the user into an integer guess.
+
+  Accepts whole numbers and decimals (truncated to int, e.g. "7.9" -> 7).
+  Rejects empty input, None, and non-numeric strings.
+
+  Returns a three-element tuple:
+    - ok (bool):              True if parsing succeeded, False otherwise
+    - guess_int (int | None): the parsed integer, or None on failure
+    - error_msg (str | None): human-readable error string, or None on success
+  """
+
+check_guess:
+
+  """
+  Compare the player's guess against the secret number.
+
+  Returns a two-element tuple:
+    - outcome (str): one of "Win", "Too High", or "Too Low"
+    - message (str): an emoji-prefixed hint shown to the player
+
+  "Too High" means the guess was above the secret -> player should go lower.
+  "Too Low"  means the guess was below the secret -> player should go higher.
+  """
+
+update_score:
+
+  """
+  Calculate and return the new score after a guess.
+
+  Win:
+    Awards 100 - 10 * (attempt_number + 1) points, minimum 10.
+    Fewer attempts used means a higher score.
+
+  Too High / Too Low:
+    Deducts 5 points. Wrong guesses never award points.
+    Score can go negative if the player guesses poorly enough.
+
+  Any unrecognised outcome leaves the score unchanged.
+  """
+
+
+APP.PY — ADDED BLOCK COMMENTS
+-------------------------------
+
+Each logical section of the script received a high-level comment explaining
+its purpose and behaviour.
+
+ATTEMPT_LIMIT_MAP constant:
+  # Maps each difficulty level to the maximum number of guesses allowed.
+
+Page config block:
+  # Sets the browser tab title and favicon for the Streamlit app.
+
+Sidebar settings block:
+  # Lets the player choose a difficulty before or between games.
+  # Derives the attempt limit and number range from the chosen difficulty.
+
+Session state initialization block:
+  # Streamlit reruns the entire script on every interaction, so session_state
+  # is used to persist game data (secret number, attempt count, score, etc.)
+  # across reruns. Each key is only initialised once per browser session.
+
+Game UI block:
+  # Displays the current range, attempts remaining, and a debug expander.
+  # Renders the guess input and the three action controls (submit, new game,
+  # hint toggle) as side-by-side columns.
+
+New game handler block:
+  # Resets all session state to starting values and picks a new secret number
+  # within the range for the currently selected difficulty, then reruns the app.
+
+Game-over guard block:
+  # If the game has already ended (won or lost), show the appropriate message
+  # and halt further script execution so the guess form is not rendered.
+
+Guess submission handler block:
+  # Increments the attempt counter, validates the input via parse_guess, then
+  # checks the guess and updates the score. Ends the game when the player wins
+  # or exhausts their allowed attempts.
+
+
+========================================================
+TEST RESULTS AFTER ALL CHANGES
+========================================================
+
+35 passed in 0.05s (all tests green, no regressions)
