@@ -38,10 +38,13 @@ Document at least 3 bugs you found. Add rows as needed.
 
 - Give one example of an AI suggestion that was correct (including what the AI suggested and how you verified the result).
   The AI assistant notified me that the Too High or Too Low features were swapped. I went ahead and tested this out by
-  purposefully using  a number that was lower than the answer. What the AI suggested is below:
-  app.py:37-40	"Go HIGHER"/"Go LOWER" hints are swapped
+  purposefully using  a number that was lower than the answer. 
+  
+  What the AI suggested is below:
+  app.py:37-40->"Go HIGHER"/"Go LOWER" hints are swapped
   
 - Give one example of an AI suggestion that was incorrect or misleading (including what the AI suggested and how you verified the result).
+ 
   The AI suggested that the game reset was flawed. This means that attemtps were never reset to their intended value.
   I tested this by playing a game and then resetting it (or clicking new game). Upon clicking new game, attempts were still at 1.
   This was rather hard to tease out as it was somewhat ambiguous.
