@@ -89,4 +89,5 @@ Streamlit reruns will rerun the streamlit app script or reinitialize the app.py 
 
 - In one or two sentences, describe how this project changed the way you think about AI generated code.
 
-  AI generated code is really nice to work with.
+  AI generated code is really nice to work with. I did have to be extra careful with my prompting to not induce a hallucination and render my code useless.
+  It also lifted a lot of the mental bandwidth and allowed me to focus more on the functionality and design.
